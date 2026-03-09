@@ -29,7 +29,7 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in" style={{ animationDelay: "150ms" }}>
+      <div className="mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8 animate-fade-in" style={{ animationDelay: "150ms" }}>
         {/* Recent Projects */}
         <section>
           <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-4">
@@ -90,9 +90,9 @@ const Index = () => {
 };
 
 const recentProjects = [
-  { title: "BBSI myBBSI Portal", description: "Enterprise HRIS portal with Electronic Employee File Cabinet and Performance Management modules", year: "2024" },
-  { title: "Scribe Virtual Classroom", description: "Role-based virtual classroom platform with secure authentication and granular permissions", year: "2024" },
-  { title: "Multi-tenant SaaS Platform", description: "Performance Management platform for PEO companies with strict tenant data isolation", year: "2024" },
+  { title: "BBSI myBBSI Portal", description: "Enterprise HRIS portal with Electronic Employee File Cabinet and Performance Management modules", year: "2026" },
+  { title: "Scribe Virtual Classroom", description: "Role-based virtual classroom platform with secure authentication and granular permissions", year: "2025" },
+  { title: "Multi-tenant SaaS Platform", description: "Performance Management platform for PEO companies with strict tenant data isolation", year: "2025" },
 ];
 
 const recentPosts = [

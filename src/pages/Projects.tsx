@@ -102,7 +102,7 @@ const Projects = () => {
 const projects = [
   {
     title: "BBSI myBBSI Portal",
-    description: "Led backend development for the Electronic Employee File Cabinet (EEFC) module in the myBBSI HRIS portal, building secure Spring Boot microservices integrated with Box for centralized employee document management. Implemented Performance Management system with multi-tenant SaaS platform for PEO companies.",
+    description: "Led backend development for the Electronic Employee File Cabinet (EEFC) module in the myBBSI HRIS portal, building secure Spring Boot microservices integrated with Box for centralized employee document management. ",
     tags: ["Spring Boot", "Java", "React", "Apache Kafka", "Box API", "Microservices"],
     github: null,
     live: null,
@@ -111,7 +111,7 @@ const projects = [
   {
     title: "Multi-tenant Performance Management",
     description: "Implemented a multi-tenant SaaS platform for Performance Management with strict tenant data isolation and role-based access control (RBAC) for enterprise-grade reliability. Achieved 99.5% uptime through fault-tolerant design.",
-    tags: ["Spring Boot", "Multi-tenancy", "RBAC", "Enterprise", "SaaS"],
+    tags: ["React","Spring Boot", "Multi-tenancy", "RBAC", "Enterprise", "SaaS",],
     github: null,
     live: null,
   },

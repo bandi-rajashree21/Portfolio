@@ -1,4 +1,29 @@
-import { Briefcase, GraduationCap, Award, MapPin, Calendar, Wrench } from "lucide-react";
+import { Briefcase, GraduationCap, Award, MapPin, Calendar, Wrench, Cloud, Code } from "lucide-react";
+import { 
+  SiJavascript, 
+  SiTypescript, 
+  SiReact, 
+  SiAngular, 
+  SiTailwindcss, 
+  SiHtml5, 
+  SiCss, 
+  SiSpring, 
+  SiNodedotjs, 
+  SiApachekafka, 
+  SiMysql, 
+  SiPostgresql, 
+  SiMongodb, 
+  SiPrisma, 
+  SiGit, 
+  SiDocker,
+  SiPython,
+  SiC
+} from "react-icons/si";
+
+import { FaNetworkWired } from "react-icons/fa";
+import { TbApi } from "react-icons/tb";
+
+import { DiJava } from "react-icons/di";
 
 const About = () => {
   return (
@@ -71,28 +96,33 @@ const About = () => {
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Skills & Technologies</h2>
         </div>
         
-        <div className="space-y-6">
-          {skillGroups.map((group) => (
-            <div key={group.category} className="space-y-3">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
-                {group.category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium
-                             border border-gray-200 dark:border-gray-700
-                             bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300
-                             transition-colors duration-200"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+            <div className="space-y-6">
+              {skillGroups.map((group) => (
+                <div key={group.category} className="space-y-3">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+                    {group.category}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill) => {
+                      const IconComponent = skill.icon;
+                      return (
+                        <span
+                          key={skill.name}
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium
+                                   border border-gray-200 dark:border-gray-700
+                                   bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300
+                                   hover:bg-gray-50 dark:hover:bg-gray-750
+                                   transition-all duration-200 hover:scale-105"
+                        >
+                          <IconComponent className={`w-4 h-4 ${skill.color}`} />
+                          {skill.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
       </section>
 
       {/* Education Section */}
@@ -193,11 +223,54 @@ const experience = [
 ];
 
 const skillGroups = [
-  { category: "Languages", skills: ["Java", "JavaScript", "TypeScript", "Python", "C"] },
-  { category: "Frontend", skills: ["React", "Angular", "TailwindCSS", "HTML", "CSS"] },
-  { category: "Backend", skills: ["Spring Boot", "Node.js", "Microservices", "Apache Kafka", "REST APIs"] },
-  { category: "Databases", skills: ["MySQL", "PostgreSQL", "MongoDB", "Prisma"] },
-  { category: "Cloud & Tools", skills: ["AWS", "Git", "Docker", "Event-Driven Architecture"] },
+  { 
+    category: "Languages", 
+    skills: [
+      { name: "Java", icon: DiJava, color: "text-red-600" },
+      { name: "JavaScript", icon: SiJavascript, color: "text-yellow-500" },
+      { name: "TypeScript", icon: SiTypescript, color: "text-blue-600" },
+      { name: "Python", icon: SiPython, color: "text-blue-500" },
+      { name: "C", icon: SiC, color: "text-blue-700" }
+    ]
+  },
+  { 
+    category: "Frontend", 
+    skills: [
+      { name: "React", icon: SiReact, color: "text-cyan-500" },
+      { name: "Angular", icon: SiAngular, color: "text-red-600" },
+      { name: "TailwindCSS", icon: SiTailwindcss, color: "text-cyan-400" },
+      { name: "HTML", icon: SiHtml5, color: "text-orange-600" },
+      { name: "CSS", icon: SiCss, color: "text-blue-500" }
+    ]
+  },
+  { 
+    category: "Backend", 
+    skills: [
+      { name: "Spring Boot", icon: SiSpring, color: "text-green-600" },
+      { name: "Node.js", icon: SiNodedotjs, color: "text-green-500" },
+{ name: "Microservices", icon: FaNetworkWired, color: "text-gray-600" },
+,
+      { name: "Apache Kafka", icon: SiApachekafka, color: "text-black dark:text-white" },
+{ name: "REST APIs", icon: TbApi, color: "text-blue-600" },
+    ]
+  },
+  { 
+    category: "Databases", 
+    skills: [
+      { name: "MySQL", icon: SiMysql, color: "text-blue-600" },
+      { name: "PostgreSQL", icon: SiPostgresql, color: "text-blue-700" },
+      { name: "MongoDB", icon: SiMongodb, color: "text-green-600" },
+      { name: "Prisma", icon: SiPrisma, color: "text-gray-800 dark:text-gray-300" }
+    ]
+  },
+  { 
+    category: "Cloud & Tools", 
+    skills: [
+      { name: "AWS", icon: Cloud, color: "text-orange-500" },
+      { name: "Git", icon: SiGit, color: "text-red-600" },
+      { name: "Docker", icon: SiDocker, color: "text-blue-600" },
+{ name: "Event-Driven Architecture", icon: SiApachekafka, color: "text-purple-600" }    ]
+  },
 ];
 
 const education = [
