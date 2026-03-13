@@ -4,7 +4,6 @@ import { ExternalLink, Github } from "lucide-react";
 const Projects = () => {
   const [filter, setFilter] = useState<string | null>(null);
 
-  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags)));
   const filtered = filter
     ? projects.filter((p) => p.tags.includes(filter))
     : projects;
@@ -18,31 +17,6 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 animate-fade-in" style={{ animationDelay: "100ms" }}>
-        <button
-          onClick={() => setFilter(null)}
-          className={`text-xs px-3 py-1 rounded-full transition-colors ${
-            filter === null
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-secondary-foreground hover:bg-accent/20 hover:text-accent"
-          }`}
-        >
-          All
-        </button>
-        {allTags.map((tag) => (
-          <button
-            key={tag}
-            onClick={() => setFilter(tag === filter ? null : tag)}
-            className={`text-xs px-3 py-1 rounded-full transition-colors ${
-              filter === tag
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-secondary-foreground hover:bg-accent/20 hover:text-accent"
-            }`}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
 
       <div className="space-y-6 animate-fade-in" style={{ animationDelay: "200ms" }}>
         {filtered.map((project) => (
@@ -123,6 +97,14 @@ const projects = [
     github: null,
     live: null,
   },
+  {
+
+    title: "Chat Application",
+    description: "Implemented A small realtime chat application with a Node/Express + Socket.IO backend and a React",
+    tags: ["Node.js", "React", "MongoDB", "Express", "Real-time"],
+    github: "https://github.com/bandi-rajashree21/chat-app",
+    live: "https://chat-app-51tu.onrender.com/login",
+  }
  
 ];
 

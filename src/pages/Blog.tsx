@@ -99,6 +99,14 @@ const Blog = () => {
 
 const posts = [
   {
+    slug: "what-happens-when-you-type-google-com",
+    title: "What Actually Happens When You Type `www.google.com` in Your Browser?",
+    excerpt: "A behind-the-scenes walkthrough of DNS, TCP/TLS, load balancing, and distributed systems that power a simple URL request.",
+    date: "Mar 2026",
+    readTime: "7 min",
+    tags: ["Networking", "Systems", "Web"],
+  },
+  {
     slug: "building-design-system",
     title: "Building a Design System from Scratch",
     excerpt: "How I approached creating a cohesive design system for a growing product, from tokens to components.",
@@ -114,30 +122,7 @@ const posts = [
     readTime: "5 min",
     tags: ["Tools", "Frontend"],
   },
-  {
-    slug: "clean-architecture-frontend",
-    title: "Clean Architecture in Frontend Applications",
-    excerpt: "Applying clean architecture principles to React applications for better testability and maintainability.",
-    date: "Dec 2024",
-    readTime: "12 min",
-    tags: ["Architecture", "React"],
-  },
-  {
-    slug: "typescript-patterns",
-    title: "TypeScript Patterns I Use Every Day",
-    excerpt: "Practical TypeScript patterns that improve code quality and developer experience in real-world projects.",
-    date: "Nov 2024",
-    readTime: "7 min",
-    tags: ["TypeScript", "Frontend"],
-  },
-  {
-    slug: "postgres-for-everything",
-    title: "Why PostgreSQL is My Default Database",
-    excerpt: "From JSON support to full-text search, PostgreSQL handles almost everything I throw at it.",
-    date: "Oct 2024",
-    readTime: "6 min",
-    tags: ["Backend", "Database"],
-  },
+ 
 ];
 
 export default Blog;

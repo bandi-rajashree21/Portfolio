@@ -2,6 +2,122 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const blogContent: Record<string, { title: string; date: string; readTime: string; content: string }> = {
+  "what-happens-when-you-type-google-com": {
+    title: "What Actually Happens When You Type `www.google.com` in Your Browser?",
+    date: "March 13, 2026",
+    readTime: "7 min read",
+    content: `
+Most of us type a URL and press Enter without thinking about the complex distributed systems working behind the scenes. But that single action triggers a fascinating chain of networking, DNS resolution, and large-scale infrastructure processes.
+
+Let’s walk through what happens internally.
+
+## 1. DNS Resolution (Domain Name → IP Address)
+
+Humans prefer domain names like www.google.com, but computers communicate using IP addresses.
+
+When you type a URL, the browser first checks whether the IP address is cached locally:
+
+- Browser cache
+- Operating system cache
+- Router cache
+
+If it isn’t found, the request is sent to a DNS resolver, typically provided by your ISP (Internet Service Provider).
+
+The DNS system then resolves the domain name by querying:
+
+- Root DNS servers
+- Top-level domain (TLD) servers such as .com
+- Authoritative DNS servers
+
+Finally, the resolver returns the IP address of Google’s server to your browser.
+
+## 2. Establishing a Network Connection
+
+Once the IP address is obtained, the browser establishes a connection using TCP (Transmission Control Protocol).
+
+For secure websites like Google, a TLS handshake occurs to create an encrypted connection over HTTPS.
+
+This process ensures:
+
+- Authentication
+- Encryption
+- Data integrity
+
+## 3. Sending the HTTP Request
+
+After the secure connection is established, the browser sends an HTTP/HTTPS request to the server.
+
+Example request:
+
+GET / HTTP/1.1
+Host: www.google.com
+
+This request travels across multiple network hops through routers across the internet.
+
+## 4. Request Hits the Load Balancer
+
+In modern large-scale systems, requests do not directly reach application servers.
+
+Instead, they first go through a load balancer.
+
+The load balancer acts as an intelligent traffic manager that distributes incoming requests across multiple backend servers.
+
+This prevents:
+
+- Server overload
+- Single points of failure
+- Performance bottlenecks
+
+## 5. Horizontal vs Vertical Scaling
+
+Large systems like Google scale their infrastructure using two approaches.
+
+Vertical scaling means increasing the capacity of a single server (more CPU, RAM, storage).
+
+Horizontal scaling means adding more servers and distributing traffic across them.
+
+Companies like Google primarily rely on horizontal scaling because it provides better fault tolerance and scalability.
+
+## 6. Global Data Centers and Edge Infrastructure
+
+Google operates globally distributed data centers connected through high-speed private networks.
+
+Using technologies such as:
+
+- GeoDNS routing
+- Anycast IP routing
+- Content delivery networks (CDNs)
+
+Your request is routed to the closest available data center, minimizing latency and improving response time.
+
+## 7. Server Processing
+
+Once the request reaches the appropriate server:
+
+- The application server processes the request.
+- It may query databases, caches (like Redis), or microservices.
+- The server generates an HTTP response.
+
+## 8. Response Returned to the Browser
+
+The server sends back a response containing:
+
+- HTML
+- CSS
+- JavaScript
+- Images
+
+The browser then renders the page using its rendering engine.
+
+DNS resolution → TCP/TLS handshake → Load balancing → Distributed data centers → Server processing → Response rendering.
+
+All of this typically happens in milliseconds.
+
+The next time you type www.google.com, remember that you just interacted with one of the most complex distributed systems ever built.
+
+Understanding these fundamentals helps engineers design scalable, resilient, and high-performance systems.
+    `,
+  },
   "building-design-system": {
     title: "Building a Design System from Scratch",
     date: "February 15, 2025",
