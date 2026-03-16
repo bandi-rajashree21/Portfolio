@@ -1,7 +1,52 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "../services/api";
+
+interface RecentProject {
+  id: string;
+  title: string;
+  description?: string;
+  year?: number;
+}
+
+interface RecentPost {
+  id: string;
+  title: string;
+  date: string;
+}
 
 const Index = () => {
+  const { data: projectsData, isLoading: projectsLoading } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const data: any = await apiClient.getProjects();
+      const projectsArray = Array.isArray(data) 
+        ? data 
+        : (data?.data?.items || data?.projects || []);
+      return projectsArray.slice(0, 3);
+    },
+  });
+
+  const { data: postsData, isLoading: postsLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: async () => {
+      const data: any = await apiClient.getBlogPosts();
+      const postsArray = Array.isArray(data) 
+        ? data 
+        : (data?.data?.items || data?.posts || []);
+      return postsArray.slice(0, 3).map((post: any) => ({
+        id: post.id,
+        title: post.title,
+        date: new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+      }));
+    },
+  });
+
+  const projects = projectsData || defaultProjects;
+  const posts = postsData || defaultPosts;
+  const loading = projectsLoading || postsLoading;
+
   return (
     <div className="content-width page-section">
       <div className="space-y-5 animate-fade-in">
@@ -36,27 +81,37 @@ const Index = () => {
             Recent Projects
           </h2>
           <div className="space-y-2">
-            {recentProjects.map((project) => (
-              <Link
-                key={project.title}
-                to="/projects"
-                className="block group p-3 rounded-lg hover:bg-secondary/60 transition-colors border border-transparent hover:border-border"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
-                      {project.description}
-                    </p>
+            {loading ? (
+              <p className="text-xs text-muted-foreground">Loading projects...</p>
+            ) : projects.length > 0 ? (
+              projects.map((project) => (
+                <Link
+                  key={project.id}
+                  to="/projects"
+                  className="block group p-3 rounded-lg hover:bg-secondary/60 transition-colors border border-transparent hover:border-border"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      {project.description && (
+                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                          {project.description}
+                        </p>
+                      )}
+                    </div>
+                    {project.year && (
+                      <span className="text-xs text-muted-foreground whitespace-nowrap mt-0.5 bg-secondary px-2 py-0.5 rounded">
+                        {project.year}
+                      </span>
+                    )}
                   </div>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap mt-0.5 bg-secondary px-2 py-0.5 rounded">
-                    {project.year}
-                  </span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))
+            ) : (
+              <p className="text-xs text-muted-foreground">No projects found</p>
+            )}
           </div>
         </section>
 
@@ -66,22 +121,28 @@ const Index = () => {
             Recent Writing
           </h2>
           <div className="space-y-2">
-            {recentPosts.map((post) => (
-              <Link
-                key={post.title}
-                to="/blog"
-                className="block group p-3 rounded-lg hover:bg-secondary/60 transition-colors border border-transparent hover:border-border"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-sm font-medium group-hover:text-accent transition-colors">
-                    {post.title}
-                  </h3>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap mt-0.5 bg-secondary px-2 py-0.5 rounded">
-                    {post.date}
-                  </span>
-                </div>
-              </Link>
-            ))}
+            {loading ? (
+              <p className="text-xs text-muted-foreground">Loading posts...</p>
+            ) : posts.length > 0 ? (
+              posts.map((post) => (
+                <Link
+                  key={post.id}
+                  to="/blog"
+                  className="block group p-3 rounded-lg hover:bg-secondary/60 transition-colors border border-transparent hover:border-border"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-sm font-medium group-hover:text-accent transition-colors">
+                      {post.title}
+                    </h3>
+                    <span className="text-xs text-muted-foreground whitespace-nowrap mt-0.5 bg-secondary px-2 py-0.5 rounded">
+                      {post.date}
+                    </span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p className="text-xs text-muted-foreground">No posts found</p>
+            )}
           </div>
         </section>
       </div>
@@ -89,16 +150,16 @@ const Index = () => {
   );
 };
 
-const recentProjects = [
-  { title: "BBSI myBBSI Portal", description: "Enterprise HRIS portal with Electronic Employee File Cabinet and Performance Management modules", year: "2026" },
-  { title: "Scribe Virtual Classroom", description: "Role-based virtual classroom platform with secure authentication and granular permissions", year: "2025" },
-  { title: "Multi-tenant SaaS Platform", description: "Performance Management platform for PEO companies with strict tenant data isolation", year: "2025" },
+const defaultProjects = [
+  { id: "1", title: "BBSI myBBSI Portal", description: "Enterprise HRIS portal with Electronic Employee File Cabinet and Performance Management modules", year: 2026 },
+  { id: "2", title: "Scribe Virtual Classroom", description: "Role-based virtual classroom platform with secure authentication and granular permissions", year: 2025 },
+  { id: "3", title: "Multi-tenant SaaS Platform", description: "Performance Management platform for PEO companies with strict tenant data isolation", year: 2025 },
 ];
 
-const recentPosts = [
-  { title: "Building Microservices with Spring Boot and Kafka", date: "Feb 2025" },
-  { title: "Database Optimization Strategies for Enterprise Applications", date: "Jan 2025" },
-  { title: "Multi-tenant Architecture in SaaS Platforms", date: "Dec 2024" },
+const defaultPosts = [
+  { id: "1", title: "Building Microservices with Spring Boot and Kafka", date: "Feb 2025" },
+  { id: "2", title: "Database Optimization Strategies for Enterprise Applications", date: "Jan 2025" },
+  { id: "3", title: "Multi-tenant Architecture in SaaS Platforms", date: "Dec 2024" },
 ];
 
 export default Index;

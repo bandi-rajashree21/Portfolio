@@ -1,10 +1,31 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+import { apiClient } from "../services/api";
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  tags: string[];
+  readTime: number;
+  createdAt: string;
+}
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const { data: posts = [], isLoading: loading, error } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: async () => {
+      const data: any = await apiClient.getBlogPosts();
+      const postsArray = Array.isArray(data) ? data : (data?.data?.items || data?.posts || []);
+      return postsArray;
+    },
+  });
 
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags)));
 
@@ -65,12 +86,18 @@ const Blog = () => {
       </div>
 
       <div className="space-y-2 animate-fade-in" style={{ animationDelay: "200ms" }}>
-        {filtered.length === 0 && (
+        {loading && (
+          <p className="text-sm text-muted-foreground py-8 text-center">Loading posts...</p>
+        )}
+        {error && (
+          <p className="text-sm text-red-500 py-8 text-center">{error}</p>
+        )}
+        {!loading && filtered.length === 0 && (
           <p className="text-sm text-muted-foreground py-8 text-center">
             No posts found.
           </p>
         )}
-        {filtered.map((post) => (
+        {!loading && filtered.map((post) => (
           <Link
             key={post.slug}
             to={`/blog/${post.slug}`}
@@ -86,8 +113,10 @@ const Blog = () => {
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-xs text-muted-foreground">{post.date}</span>
-                <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">{post.readTime}</span>
+                <span className="text-xs text-muted-foreground">
+                  {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+                </span>
+                <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">{post.readTime} min</span>
               </div>
             </div>
           </Link>
@@ -96,33 +125,5 @@ const Blog = () => {
     </div>
   );
 };
-
-const posts = [
-  {
-    slug: "what-happens-when-you-type-google-com",
-    title: "What Actually Happens When You Type `www.google.com` in Your Browser?",
-    excerpt: "A behind-the-scenes walkthrough of DNS, TCP/TLS, load balancing, and distributed systems that power a simple URL request.",
-    date: "Mar 2026",
-    readTime: "7 min",
-    tags: ["Networking", "Systems", "Web"],
-  },
-  {
-    slug: "building-design-system",
-    title: "Building a Design System from Scratch",
-    excerpt: "How I approached creating a cohesive design system for a growing product, from tokens to components.",
-    date: "Feb 2025",
-    readTime: "8 min",
-    tags: ["Design", "Frontend"],
-  },
-  {
-    slug: "switched-to-vite",
-    title: "Why I Switched to Vite for All My Projects",
-    excerpt: "After years of webpack, I made the switch to Vite. Here's what changed and why I'm not going back.",
-    date: "Jan 2025",
-    readTime: "5 min",
-    tags: ["Tools", "Frontend"],
-  },
- 
-];
 
 export default Blog;
