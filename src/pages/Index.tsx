@@ -51,11 +51,10 @@ const Index = () => {
     <div className="content-width page-section">
       <div className="space-y-5 animate-fade-in">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-          Hi, I'm a <span className="gradient-text">Software Developer</span>
+          Hi, I'm <span className="gradient-text">Bandi Rajashree</span>
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Full-stack Developer with experience building scalable microservices and event-driven systems using Spring Boot, Node.js, and React. 
-          Skilled in backend development, API design, database optimization, and multi-tenant SaaS platforms.
+        <p className="text-base sm:text-lg text-muted-foreground max-w-8xl leading-relaxed">
+          A Full-stack Developer with 2+ years of experience building scalable microservices and event-driven systems using Spring Boot, Node.js, and React, skilled in backend development, API design, database optimization, and multi-tenant SaaS platforms, along with crafting responsive and user-friendly frontend applications using React, with a strong focus on performance, clean architecture, and maintainable code.
         </p>
         <div className="flex flex-wrap items-center gap-3 pt-1">
           <Link

@@ -17,9 +17,8 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b">
-      <nav className="content-width flex items-center justify-between h-14 mt-3">
+      <nav className="content-width flex items-center justify-between h-14 mt-2">
         <Link to="/" className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mt-3 mb-2">
-          Bandi Rajashree
         </Link>
 
         {/* Desktop nav */}
