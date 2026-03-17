@@ -14,7 +14,6 @@ const Contact = () => {
       <div className="animate-fade-in">
         <h1>Contact</h1>
         <p className="text-muted-foreground mt-1 max-w-2xl leading-relaxed">
-          Based in Hyderabad, India. Feel free to reach out at +91 9390747552. 
           I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great.
         </p>
       </div>
