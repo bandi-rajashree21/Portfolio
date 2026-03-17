@@ -4,6 +4,7 @@
  */
 
 import React, { createContext, useState, useCallback, useEffect } from 'react';
+import { apiClient } from '../services/api';
 
 export interface User {
   id: string;
@@ -63,17 +64,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
+      const data = await apiClient.login(email, password) as {
+        data: {
+          token: string;
+          user: User;
+        };
+      };
 
       const newToken = data.data.token;
       const newUser = data.data.user;
@@ -81,6 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(newToken);
       setUser(newUser);
       localStorage.setItem('authToken', newToken);
+      localStorage.setItem('token', newToken);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
       setError(message);
@@ -94,6 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setToken(null);
     setUser(null);
     localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
   }, []);
 
   const value: AuthContextType = {

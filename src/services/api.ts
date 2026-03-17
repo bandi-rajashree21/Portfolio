@@ -5,7 +5,11 @@
 
 import axios, { AxiosInstance } from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? 'http://localhost:3000/api'
+    : 'https://portfolio-backend.bandirs2003.workers.dev/api');
 
 class APIClient {
   private axiosInstance: AxiosInstance;
@@ -20,7 +24,7 @@ class APIClient {
 
     // Add request interceptor to include auth token
     this.axiosInstance.interceptors.request.use((config) => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('authToken') || localStorage.getItem('token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
